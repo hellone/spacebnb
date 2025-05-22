@@ -1,0 +1,23 @@
+# Node modules & dist
+node_modules/
+dist/
+
+# Firebase
+.firebaserc
+firebase-debug.log
+
+# Environnements secrets
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
