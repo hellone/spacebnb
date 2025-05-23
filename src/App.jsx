@@ -5,6 +5,7 @@ import HostDashboard from './pages/HostDashboard.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
 import Login from './pages/Login.jsx';
 import Header from './components/Header.jsx';
+import Profile from './pages/Profile.jsx';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/host" element={<HostDashboard />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
