@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { db, auth } from '../firebase';
-import { collection, getDocs, doc, setDoc, deleteDoc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import CardEspace from '../components/CardEspace';
 
@@ -48,31 +48,42 @@ const Explore = () => {
 
   return (
     <div className="container">
-      <h2>Explorer les espaces</h2>
-      {spaces.map(space => (
-        <div key={space.id} style={{ position: 'relative' }}>
-          <CardEspace space={space} />
-          {user && (
-            <button
-              onClick={() => toggleFavorite(space.id)}
-              style={{
-                position: 'absolute',
-                top: 10,
-                right: 10,
-                background: 'none',
-                border: 'none',
-                fontSize: '1.5rem',
-                cursor: 'pointer',
-                color: favorites.has(space.id) ? 'red' : '#aaa'
-              }}
-            >
-              {favorites.has(space.id) ? '❤️' : '🤍'}
-            </button>
-          )}
-        </div>
-      ))}
+      <h2 style={{ marginBottom: '1rem' }}>Explorer les espaces</h2>
+      <div style={styles.grid}>
+        {spaces.map(space => (
+          <div key={space.id} style={{ position: 'relative' }}>
+            <CardEspace space={space} />
+            {user && (
+              <button
+                onClick={() => toggleFavorite(space.id)}
+                style={styles.favBtn(favorites.has(space.id))}
+              >
+                {favorites.has(space.id) ? '❤️' : '🤍'}
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
+};
+
+const styles = {
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+    gap: '1.5rem',
+  },
+  favBtn: (active) => ({
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    background: 'none',
+    border: 'none',
+    fontSize: '1.8rem',
+    cursor: 'pointer',
+    color: active ? 'red' : '#aaa',
+  }),
 };
 
 export default Explore;
