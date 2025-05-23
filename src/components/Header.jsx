@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { auth } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signInWithPopup, signOut, GoogleAuthProvider } from 'firebase/auth';
+import { APP_VERSION } from '../version';
 
 const Header = () => {
   const [user] = useAuthState(auth);
@@ -18,8 +19,9 @@ const Header = () => {
           <Link to="/" style={styles.link}>Explorer</Link>
           <Link to="/host" style={styles.link}>Hôte</Link>
           <Link to="/admin" style={styles.link}>Admin</Link>
+          <Link to="/bookings" style={styles.link}>Mes réservations</Link>
         </div>
-        <div>
+        <div style={styles.right}>
           {user ? (
             <div style={styles.profileWrapper}>
               <Link to="/profile">
@@ -27,6 +29,7 @@ const Header = () => {
                   src={user.photoURL}
                   alt="profile"
                   style={styles.avatar}
+                  title={user.displayName}
                 />
               </Link>
               <button onClick={handleLogout} style={styles.logout}>Déconnexion</button>
@@ -34,6 +37,7 @@ const Header = () => {
           ) : (
             <button onClick={handleLogin} style={styles.login}>Connexion</button>
           )}
+          <span style={styles.version}>{APP_VERSION}</span>
         </div>
       </nav>
     </header>
@@ -73,15 +77,25 @@ const styles = {
     borderRadius: '6px',
     cursor: 'pointer',
   },
+  right: {
+    display: 'flex',
+    alignItems: 'center',
+  },
   profileWrapper: {
     display: 'flex',
     alignItems: 'center',
+    marginRight: '1rem',
   },
   avatar: {
     width: '36px',
     height: '36px',
     borderRadius: '50%',
     cursor: 'pointer',
+  },
+  version: {
+    fontSize: '0.8rem',
+    color: '#888',
+    marginLeft: '1rem',
   },
 };
 
